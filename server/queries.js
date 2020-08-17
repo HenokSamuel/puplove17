@@ -21,6 +21,8 @@ const getLocs = () => Location.findAll();
 
 const addUser = (userId, userInfoObj) => User.update(userInfoObj, { where: { id: userId } });
 
+const updateDog = (userId, userInfoObj) => Dog.update(userInfoObj, { where: { id_user: userId } });
+
 const addFriend = (friendObj) => FriendJoint.create(friendObj);
 
 const getFriends = (id) => FriendJoint.findAll({ where: { id_dog: id } });
@@ -50,4 +52,5 @@ module.exports = {
   addDog,
   addLoc,
   getLocs,
+  updateDog
 };

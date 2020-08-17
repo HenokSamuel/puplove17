@@ -12,7 +12,7 @@ const {
   addUser, getUsers, getDogs,
   addFriend, unFriend, isAccCreated,
   addDog, addLoc, getLocs, getFriends,
-  getCurrentDog,
+  getCurrentDog, updateDog,
 } = require('./queries.js');
 
 const PORT = process.env.PORT || 3000;
