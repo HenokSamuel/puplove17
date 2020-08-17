@@ -137,6 +137,36 @@ app.get('/logout', (req, res) => {
 app.get('/session', (req, res) => {
   res.send(req.session.passport.user);
 });
+/////////
+app.get('/myProfileInfo', (req, res) => {
+  console.log('9788888888888888');
+  const userId = req.session.passport.user.id;
+  getUser(userId)
+    .then((list) => {
+      console.log('sucess 82');
+      console.log(list, 83);
+      res.send(list);
+    })
+    .catch((err) => {
+      console.log(err, 87);
+      res.status(500).send(err);
+    });
+});
+app.post('/updateUserAndDog', (req, res) => {
+  console.log('update user&dog api hit');
+  const userEditObj = req.body.user;
+  const dogEditObj = req.body.dog;
+  const userId = req.session.passport.user.id;
+  const updateUserObj = null;
+  addUser(userId, userEditObj)
+    .then((result) => console.log(result))
+    .catch((err) => console.log(err));
+  updateDog(userId, dogEditObj).then((result) => {
+    console.log('line 19', result);
+    res.send({ user: updateUserObj, dog: result.data });
+    res.redirect('/login');
+  });
+});
 
 app.get('*', (req, res) => {
   res.sendFile(`${CLIENT_PATH}/index.html`);
