@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
-function SignUp({ sessUser, sessDog }) {
-    const [ username, setUsername ] = useState('');
-    const [ cell, setCell ] = useState('');
-    const [ hometown, setHometown ] = useState('');
-    const [ dogName, setDogName ] = useState('');
-    const [ weight, setWeight ] = useState('');
-    const [ age, setAge ] = useState('');
-    const [ breed, setBreed ] = useState('');
-    const [ desc, setDesc ] = useState('');
-    const [ image, setImage ] = useState('');
-    const [ fixed, setFixed ] = useState('');
+function SignUp({ sessUser, setSessUser, sessDog, setSessDog }) {
+    const [username, setUsername] = useState('');
+    const [cell, setCell] = useState('');
+    const [hometown, setHometown] = useState('');
+    const [dogName, setDogName] = useState('');
+    const [weight, setWeight] = useState('');
+    const [age, setAge] = useState('');
+    const [breed, setBreed] = useState('');
+    const [desc, setDesc] = useState('');
+    const [image, setImage] = useState('');
+    const [fixed, setFixed] = useState('');
 
     const addUserInfo = () => {
         axios.post('/users', {
@@ -20,9 +20,18 @@ function SignUp({ sessUser, sessDog }) {
             cell: cell,
             home_town: hometown
         })
-        .then(() => console.log('successful post for user info'))
-        .catch((err) => console.log('unsuccesful post request for user info: ', err));
+            .then((result) => {
+                axios.get('/myProfileInfo')
+                    .then(response => {
+                        setSessUser(response.data[0]);
+                    }
+                    )
+                    .catch(err => console.log(16, err));
+                console.log(result, 'successful post for user info')
+            })
+            .catch((err) => console.log('unsuccesful post request for user info: ', err));
     };
+
 
     const addDogInfo = () => {
         axios.post('/dogs', {
@@ -35,8 +44,11 @@ function SignUp({ sessUser, sessDog }) {
             image: image,
             id_user: sessUser.id,
         })
-        .then(() => console.log('successful post for dog info'))
-        .catch((err) => console.log('unsuccesful post request for dog info: ', err));
+            .then((result) => {
+                console.log('dog info line 50', result, 'successful post for dog info');
+                setSessDog(result.data);
+            })
+            .catch((err) => console.log('unsuccesful post request for dog info: ', err));
     };
 
     return (
@@ -44,11 +56,11 @@ function SignUp({ sessUser, sessDog }) {
             <h1>Sign Up</h1>
             <div id="sign-form">
                 <h3>Create Account</h3>
-                    <div class="sc-container">
-                        <input classname='create' onChange={(event) => setUsername(event.target.value)} type="text" placeholder="Username" /><br /><br />
-                        <input classname='create' onChange={(event) => setCell(event.target.value)} type="text" placeholder="Cell Phone Number" /><br /><br />
-                        <input classname='create' onChange={(event) => setHometown(event.target.value)} type="text" placeholder="Hometown" /><br /><br />
-                    </div>
+                <div class="sc-container">
+                    <input classname='create' onChange={(event) => setUsername(event.target.value)} type="text" placeholder="Username" /><br /><br />
+                    <input classname='create' onChange={(event) => setCell(event.target.value)} type="text" placeholder="Cell Phone Number" /><br /><br />
+                    <input classname='create' onChange={(event) => setHometown(event.target.value)} type="text" placeholder="Hometown" /><br /><br />
+                </div>
                 <h3>Add Your Dog</h3>
                 <div class="signup-form">
                     <input classname='create' onChange={(event) => setDogName(event.target.value)} type="text" placeholder="Name" /><br /><br />
