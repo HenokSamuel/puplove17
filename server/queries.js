@@ -13,6 +13,12 @@ const isAccCreated = (googleId) => User.findAll({
 
 const getUsers = () => User.findAll();
 
+const getUser = (userId) => User.findAll({
+  where: {
+    id: userId,
+  },
+});
+
 const getDogs = () => Dog.findAll();
 
 const getCurrentDog = (userId) => Dog.findAll({ where: { id_user: userId } });
@@ -52,5 +58,6 @@ module.exports = {
   addDog,
   addLoc,
   getLocs,
-  updateDog
+  updateDog,
+  getUser
 };

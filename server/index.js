@@ -12,7 +12,7 @@ const {
   addUser, getUsers, getDogs,
   addFriend, unFriend, isAccCreated,
   addDog, addLoc, getLocs, getFriends,
-  getCurrentDog, updateDog,
+  getCurrentDog, updateDog, getUser,
 } = require('./queries.js');
 
 const PORT = process.env.PORT || 3000;
@@ -61,9 +61,13 @@ app.get('/dogs', (req, res) => {
 });
 
 app.post('/dogs', (req, res) => {
+  console.log('post to dogs api');
   const dogInfo = req.body;
   addDog(dogInfo)
-    .then(() => res.sendStatus(201))
+    .then((result) => {
+      console.log(result);
+      res.send(result)
+    })
     .catch((err) => res.status(500).send(err));
 });
 
@@ -144,7 +148,7 @@ app.get('/myProfileInfo', (req, res) => {
   getUser(userId)
     .then((list) => {
       console.log('sucess 82');
-      console.log(list, 83);
+      
       res.send(list);
     })
     .catch((err) => {

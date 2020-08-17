@@ -20,31 +20,33 @@ function App() {
    const [index, setIndex] = useState(0);
    const [dogDisplayInfo, setDogDisplayInfo] = useState('');
 
-   useEffect(() => {
-      axios.get('/session')
-         .then(response => setSessUser(response.data))
-         .catch(err => console.error(err));
-   }, [sessUser]);
+   // useEffect(() => {
+   //    axios.get('/session')
+   //       .then(response => setSessUser(response.data))
+   //       .catch(err => console.error(err));
+   // }, [sessUser]);
 
 
    useEffect(() => {
       axios.get('/myProfileInfo')
          .then(response => {
-            console.log(36, response.data);
-            setSessUser(response.data[0]);
-
+            // console.log(36, response.data);
+            setSessUser(response.data);
          }
          )
          .catch(err => console.log(16, err));
 
-   }, [sessUser])
+   }, [])
 
 
    useEffect(() => {
       axios.get('/currentDog')
-         .then(response => setSessDog(response.data))
+         .then(response => {
+            // console.log(46, response.data);
+            setSessDog(response.data)
+         })
          .catch(err => console.error('could not set session dog: ', err));
-   }, [sessDog]);
+   }, []);
 
    useEffect(() => {
       axios.get('/dogs')
@@ -103,7 +105,7 @@ function App() {
             <Switch>
                <Route exact={true} path="/" render={() => (<Choice open={open} sessUser={sessUser} sessDog={sessDog} dogViews={dogViews} allDogs={allDogs} getFriends={getFriends} index={index} setIndex={setIndex} dogDisplayInfo={dogDisplayInfo} setDogDisplayInfo={setDogDisplayInfo} />)} />
                <Route exact path="/login" render={() => (<Login />)} />
-               <Route path="/myprofile" render={() => (<MyProfile open={open} sessUser={sessUser} sessDog={sessDog} />)} />
+               <Route path="/myprofile" render={() => (<MyProfile open={open} sessUser={sessUser} sessDog={sessDog} setSessDog={setSessDog} />)} />
                <Route path="/dogprofile" render={() => (<DogProfile open={open} sessUser={sessUser} sessDog={sessDog} allDogs={allDogs} friends={friends} getFriends={getFriends} />)} />
                <Route path="/popular" render={() => (<PopularLocations sessUser={sessUser} sessDog={sessDog} open={open} lat={lat} lng={lng} />)} />
                <Route path="/signUp" render={() => (<SignUp sessUser={sessUser} sessDog={sessDog} setSessDog={setSessDog} setSessUser={setSessUser} />)} />

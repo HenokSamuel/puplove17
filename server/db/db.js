@@ -65,15 +65,15 @@ const Dog = sequelize.define('Dog', {
     allowNull: false,
   },
   weight: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   age: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   fixed: {
-    type: DataTypes.TINYINT,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   description: {

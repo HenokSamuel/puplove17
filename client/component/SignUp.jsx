@@ -15,14 +15,17 @@ function SignUp({ sessUser, setSessUser, sessDog, setSessDog }) {
     const [fixed, setFixed] = useState('');
 
     const addUserInfo = () => {
+        console.log('addUSERINFO IS GETTING HIT');
         axios.post('/users', {
             username: username,
             cell: cell,
             home_town: hometown
         })
             .then((result) => {
+                console.log('sucessful post to users route');
                 axios.get('/myProfileInfo')
                     .then(response => {
+                        console.log('sucessful get request to users route');
                         setSessUser(response.data[0]);
                     }
                     )
@@ -34,6 +37,7 @@ function SignUp({ sessUser, setSessUser, sessDog, setSessDog }) {
 
 
     const addDogInfo = () => {
+        console.log('DOGINFO IS GETTING HIT');
         axios.post('/dogs', {
             dog_name: dogName,
             breed: breed,
@@ -77,8 +81,9 @@ function SignUp({ sessUser, setSessUser, sessDog, setSessDog }) {
                     <input classname='create-desc' onChange={(event) => setDesc(event.target.value)} type="text" placeholder="Description" /><br /><br />
                     <input classname='create' onChange={(event) => setImage(event.target.value)} type="text" placeholder="Image URL" /><br /><br />
                     <Link to='/' id="dude" onClick={() => {
-                        addUserInfo;
-                        addDogInfo;
+                     console.log('LINK ON 81')
+                        addUserInfo();
+                        addDogInfo();
                     }}>Create</Link>
                 </div>
             </div>
